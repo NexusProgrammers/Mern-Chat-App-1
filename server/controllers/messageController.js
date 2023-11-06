@@ -21,6 +21,7 @@ export const getMessages = expressAsyncHandler(async (req, res) => {
   const userData = await getUserDataFromRequest(req);
 
   const { userId } = req.params;
+  
   const ourUserId = userData.user._id;
   const messages = await Message.find({
     sender: { $in: [userId, ourUserId] },
