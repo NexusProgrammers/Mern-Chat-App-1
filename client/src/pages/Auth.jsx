@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_AUTH_URL } from "../api";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 const Auth = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ const Auth = () => {
         toast.success(response.data.message, {
           duration: 3000,
         });
+        Cookies.set(response.data.token);
       }
     } catch (error) {
       toast.error(error.response.data.message, {
@@ -45,8 +47,9 @@ const Auth = () => {
         withCredentials: true,
       });
       if (response.status === 200) {
-        toast.success(response.data.message);
         window.location.reload();
+        toast.success(response.data.message);
+        Cookies.set(response.data.token);
       }
     } catch (error) {
       toast.error(error.response.data.message, {
