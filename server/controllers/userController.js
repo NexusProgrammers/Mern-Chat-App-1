@@ -111,12 +111,20 @@ export const logout = expressAsyncHandler(async (req, res) => {
 });
 
 export const getProfile = expressAsyncHandler(async (req, res) => {
-  const user = req.user;
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(401).json({ message: "No user found" });
+  const userId = req.user._id;
+
+  console.log("userId", userId);
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      message: "User Not Found",
+    });
   }
+
+  res.status(200).json(user);
 });
 
 export const getOnlinePeople = expressAsyncHandler(async (req, res) => {

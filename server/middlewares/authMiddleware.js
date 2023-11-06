@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import expressAsyncHandler from "express-async-handler";
-import User from "../models/userModel.js";
 
 const authMiddleware = expressAsyncHandler(async (req, res, next) => {
   const authorizationHeader = req.headers.authorization;
@@ -21,13 +20,15 @@ const authMiddleware = expressAsyncHandler(async (req, res, next) => {
 
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const user = await User.findById(verified.id);
+    const user = verified.user;
+
     if (!user) {
       return res.status(401).json({
         success: false,
         message: "User Not Found",
       });
     }
+
     req.user = user;
     next();
   } catch (error) {
