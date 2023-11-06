@@ -113,6 +113,7 @@ export const login = expressAsyncHandler(async (req, res) => {
 });
 
 export const logout = expressAsyncHandler(async (req, res) => {
+  
   res.clearCookie("token");
 
   res.status(200).json({
