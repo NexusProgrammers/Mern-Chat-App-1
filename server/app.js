@@ -27,9 +27,8 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: "https://mern-chat-app-1-client.vercel.app",
     credentials: true,
-    optionsSuccessStatus:200
   })
 );
 
@@ -134,7 +133,7 @@ wss.on("connection", (connection, req) => {
   connection.on("message", async (message) => {
     const messageData = JSON.parse(message.toString());
     const { recipient, text, file } = messageData;
-    let filename = null
+    let filename = null;
     if (file) {
       const parts = file.name.split(".");
       const ext = parts[parts.length - 1];
@@ -188,4 +187,3 @@ wss.on("connection", (connection, req) => {
   // Online people when someone connects
   notifyAboutOnlinePeople();
 });
-

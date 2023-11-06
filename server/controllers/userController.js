@@ -45,12 +45,7 @@ export const register = expressAsyncHandler(async (req, res) => {
 
   const token = generateToken(user);
 
-  res.cookie("token", token, {
-    path: "/",
-    secure: true,
-    domain: "mern-chat-app-1-client.vercel.app",
-    signed: true,
-  });
+  res.cookie("token", token, { path: "/", secure: true });
 
   return res.status(201).json({
     success: true,
@@ -97,12 +92,7 @@ export const login = expressAsyncHandler(async (req, res) => {
 
   const token = generateToken(user);
 
-  res.cookie("token", token, {
-    path: "/",
-    secure: true,
-    domain: "mern-chat-app-1-client.vercel.app",
-    signed: true,
-  });
+  res.cookie("token", token, { path: "/", secure: true });
 
   res.status(200).json({
     success: true,
@@ -113,7 +103,6 @@ export const login = expressAsyncHandler(async (req, res) => {
 });
 
 export const logout = expressAsyncHandler(async (req, res) => {
-
   res.clearCookie("token");
 
   res.status(200).json({
