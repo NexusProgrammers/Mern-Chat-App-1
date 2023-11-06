@@ -229,7 +229,7 @@ const Chat = () => {
                           <div className="flex items-center gap-1">
                             <AttachFileRoundedIcon />
                             <a
-                              href={`http://localhost:4000/uploads/${message.file}`}
+                              href={`https://mern-chat-app-1-server.vercel.app/uploads/${message.file}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="underline"
