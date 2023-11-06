@@ -45,7 +45,7 @@ export const register = expressAsyncHandler(async (req, res) => {
 
   const token = generateToken(user);
 
-  res.cookie("token", token, { path: "/", secure: true });
+  // res.cookie("token", token, { path: "/", secure: true });
 
   return res.status(201).json({
     success: true,
@@ -92,7 +92,7 @@ export const login = expressAsyncHandler(async (req, res) => {
 
   const token = generateToken(user);
 
-  res.cookie("token", token, { path: "/", secure: true });
+  // res.cookie("token", token, { path: "/", secure: true });
 
   res.status(200).json({
     success: true,
