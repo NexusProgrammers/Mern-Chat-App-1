@@ -48,6 +48,8 @@ export const register = expressAsyncHandler(async (req, res) => {
   res.cookie("token", token, {
     path: "/",
     secure: true,
+    domain: "https://mern-chat-app-1-client.vercel.app",
+    sameSite: "Lax",
   });
 
   return res.status(201).json({
@@ -98,6 +100,8 @@ export const login = expressAsyncHandler(async (req, res) => {
   res.cookie("token", token, {
     path: "/",
     secure: true,
+    domain: "https://mern-chat-app-1-client.vercel.app",
+    sameSite: "Lax",
   });
 
   res.status(200).json({
@@ -136,6 +140,6 @@ export const getProfile = expressAsyncHandler(async (req, res) => {
 });
 
 export const getOnlinePeople = expressAsyncHandler(async (req, res) => {
-  const users = await User.find({}, { _id: 1, name: 1, email: 1,image: 1 });
+  const users = await User.find({}, { _id: 1, name: 1, email: 1, image: 1 });
   res.json(users);
 });
