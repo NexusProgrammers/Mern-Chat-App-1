@@ -23,12 +23,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(helmet());
 
@@ -131,7 +126,7 @@ wss.on("connection", (connection, req) => {
   connection.on("message", async (message) => {
     const messageData = JSON.parse(message.toString());
     const { recipient, text, file } = messageData;
-    let filename = null
+    let filename = null;
     if (file) {
       const parts = file.name.split(".");
       const ext = parts[parts.length - 1];
@@ -185,4 +180,3 @@ wss.on("connection", (connection, req) => {
   // Online people when someone connects
   notifyAboutOnlinePeople();
 });
-
