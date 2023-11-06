@@ -2,7 +2,6 @@ import expressAsyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import validator from "validator";
-import jwt from "jsonwebtoken";
 
 export const register = expressAsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -112,20 +111,11 @@ export const logout = expressAsyncHandler(async (req, res) => {
 });
 
 export const getProfile = expressAsyncHandler(async (req, res) => {
-  const token = req.cookies?.token;
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, userData) => {
-      if (err) {
-        return res.status(401).json({
-          success: false,
-          message: "Invalid or expired token",
-        });
-      }
-      res.status(200).json(userData);
-    });
+  const user = req.user;
+  if (user) {
+    res.status(200).json(user);
   } else {
-    res.status(401).json({ message: "No token provided" });
+    res.status(401).json({ message: "No user found" });
   }
 });
 
