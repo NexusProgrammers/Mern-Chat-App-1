@@ -32,7 +32,7 @@ const Auth = () => {
         toast.success(response.data.message, {
           duration: 3000,
         });
-        Cookies.set(response.data.token);
+        Cookies.set("token", response.data.token);
       }
     } catch (error) {
       toast.error(error.response.data.message, {
@@ -49,7 +49,7 @@ const Auth = () => {
       if (response.status === 200) {
         window.location.reload();
         toast.success(response.data.message);
-        Cookies.set(response.data.token);
+        Cookies.set("token", response.data.token);
       }
     } catch (error) {
       toast.error(error.response.data.message, {
