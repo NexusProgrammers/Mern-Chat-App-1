@@ -48,7 +48,7 @@ export const register = expressAsyncHandler(async (req, res) => {
   res.cookie("token", token, {
     path: "/",
     secure: true,
-    domain: "https://mern-chat-app-1-client.vercel.app",
+    domain: "mern-chat-app-1-client.vercel.app",
     sameSite: "Lax",
   });
 
@@ -100,7 +100,7 @@ export const login = expressAsyncHandler(async (req, res) => {
   res.cookie("token", token, {
     path: "/",
     secure: true,
-    domain: "https://mern-chat-app-1-client.vercel.app",
+    domain: "mern-chat-app-1-client.vercel.app",
     sameSite: "Lax",
   });
 
