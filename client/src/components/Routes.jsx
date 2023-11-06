@@ -9,11 +9,15 @@ const Routes = () => {
 
   const { userData } = useContext(UserContext);
 
-  if (token) {
-    return <Chat />;
-  }
+  // if (token && userData) {
+  //   return <Chat />;
+  // }
 
-  return <Auth />;
+  // return <Auth />;
+
+  {
+    token ? <Chat /> : <Auth />;
+  }
 };
 
 export default Routes;
