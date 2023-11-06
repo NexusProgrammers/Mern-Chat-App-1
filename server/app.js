@@ -25,13 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("trust proxy", 1);
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
-
+app.use(cors());
 
 app.use(helmet());
 

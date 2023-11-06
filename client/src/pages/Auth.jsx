@@ -24,9 +24,7 @@ const Auth = () => {
 
   const handleRegistration = async () => {
     try {
-      const response = await axios.post(`${BASE_AUTH_URL}/register`, formData, {
-        withCredentials: true,
-      });
+      const response = await axios.post(`${BASE_AUTH_URL}/register`, formData);
       if (response.status === 201) {
         window.location.reload();
         toast.success(response.data.message, {
@@ -43,9 +41,7 @@ const Auth = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${BASE_AUTH_URL}/login`, formData, {
-        withCredentials: true,
-      });
+      const response = await axios.post(`${BASE_AUTH_URL}/login`, formData);
       if (response.status === 200) {
         window.location.reload();
         toast.success(response.data.message);
