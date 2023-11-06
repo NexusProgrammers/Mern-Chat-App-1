@@ -16,6 +16,7 @@ export function UserContextProvider({ children }) {
           const response = await axios.get(`${BASE_AUTH_URL}/profile`, {
             withCredentials: true,
           });
+          console.log("response", response);
           setUserData(response?.data);
         } catch (error) {
           console.error("Error fetching user data:", error);

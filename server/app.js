@@ -27,10 +27,11 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: "https://mern-chat-app-1-client.vercel.app",
+    origin: "*",
     credentials: true,
   })
 );
+
 
 app.use(helmet());
 

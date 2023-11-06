@@ -9,7 +9,9 @@ const Routes = () => {
 
   const { userData } = useContext(UserContext);
 
-  if (token && userData) {
+  console.log("userData", userData);
+
+  if (userData) {
     return <Chat />;
   }
 
