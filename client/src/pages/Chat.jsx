@@ -10,8 +10,10 @@ import toast from "react-hot-toast";
 import OnlinePeople from "../components/OnlinePeople";
 import OfflinePeople from "../components/OfflinePeople";
 import AttachFileRoundedIcon from "@mui/icons-material/AttachFileRounded";
+import Cookies from "js-cookie";
 
 const Chat = () => {
+  const token = Cookies.get('token')
   const [ws, setWs] = useState(null);
   const [onlinePeople, setOnlinePeople] = useState([]);
   const [selectedUsersId, setSelectedUsersId] = useState(null);
@@ -55,7 +57,11 @@ const Chat = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${BASE_AUTH_URL}/get-online-people`);
+        const response = await axios.get(`${BASE_AUTH_URL}/get-online-people`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const onlinePeopleIds = onlinePeople.map((person) => person._id);
         const offlinePeople = response.data.filter(
           (user) => !onlinePeopleIds.includes(user._id)
@@ -73,7 +79,12 @@ const Chat = () => {
       if (selectedUsersId) {
         try {
           const response = await axios.get(
-            `${VITE_BASE_MESSAGE_URL}/get-all/${selectedUsersId}`
+            `${VITE_BASE_MESSAGE_URL}/get-all/${selectedUsersId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           const { data } = response;
           setMessages(data);
@@ -115,7 +126,11 @@ const Chat = () => {
     ]);
     if (file) {
       axios
-        .get(`${VITE_BASE_MESSAGE_URL}/get-all/${selectedUsersId}`)
+        .get(`${VITE_BASE_MESSAGE_URL}/get-all/${selectedUsersId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setMessages(res.data);
         });
@@ -132,7 +147,11 @@ const Chat = () => {
   const messagesWithoutDupes = uniqBy(messages, "_id");
 
   const handleLogout = async () => {
-    const response = await axios.get(`${BASE_AUTH_URL}/logout`);
+    const response = await axios.get(`${BASE_AUTH_URL}/logout`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       window.location.reload();
       toast.success("Logout Successful");
@@ -181,8 +200,8 @@ const Chat = () => {
         </div>
         <div className="p-2 text-center flex items-center gap-2 justify-center">
           <img
-            src={userData.user.image}
-            alt={userData.user.name}
+            src={userData?.user?.image}
+            alt={userData?.user?.name}
             className="w-8 h-8 rounded-full"
           />
           <span className="font-semibold text-lg">{userData.user.name}</span>
@@ -240,7 +259,7 @@ const Chat = () => {
                         )}
                         <div className="text-xs text-black mt-1">
                           Sent at:
-                          {new Date(message.createdAt).toLocaleString()}
+                          {new Date(message.createdAt).toDateString()}
                         </div>
                       </div>
                     </div>

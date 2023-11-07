@@ -113,8 +113,6 @@ export const logout = expressAsyncHandler(async (req, res) => {
 export const getProfile = expressAsyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  console.log("userId", userId);
-
   const user = await User.findById(userId);
 
   if (!user) {
@@ -124,7 +122,10 @@ export const getProfile = expressAsyncHandler(async (req, res) => {
     });
   }
 
-  res.status(200).json(user);
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
 
 export const getOnlinePeople = expressAsyncHandler(async (req, res) => {

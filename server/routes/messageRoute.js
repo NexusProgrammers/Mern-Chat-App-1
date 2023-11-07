@@ -3,11 +3,12 @@ import {
   getMessages,
   getOnlinePeople,
 } from "../controllers/messageController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const messageRouter = Router();
 
-messageRouter.get("/get-all/:userId", getMessages);
+messageRouter.get("/get-all/:userId", authMiddleware, getMessages);
 
-messageRouter.get("/get-online-people", getOnlinePeople);
+messageRouter.get("/get-online-people", authMiddleware, getOnlinePeople);
 
 export default messageRouter;
