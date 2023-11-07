@@ -63,7 +63,6 @@ const server = app.listen(PORT, () => {
 const wss = new WebSocketServer({ noServer: server });
 
 wss.on("connection", (connection, req) => {
-  // getting user data from the cookie for this connection
   const notifyAboutOnlinePeople = () => {
     [...wss.clients].forEach((client) => {
       client.send(
