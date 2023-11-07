@@ -25,10 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "https://mern-chat-app-1-client.vercel.app",
-    credentials: true
+    origin: "*",
+    credentials: true,
   })
 );
+
 
 app.use(helmet());
 
