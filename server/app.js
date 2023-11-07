@@ -56,11 +56,12 @@ dbConnect();
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Starting server on port ${PORT}`);
 });
 
-const wss = new WebSocketServer({ server });
+
+const wss = new WebSocket("wss://mern-chat-app-1-server.vercel.app");
 
 wss.on("connection", (connection, req) => {
   // getting user data from the cookie for this connection
