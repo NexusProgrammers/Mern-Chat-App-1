@@ -60,7 +60,7 @@ const server = app.listen(PORT, () => {
   console.log(`Starting server on port ${PORT}`);
 });
 
-const wss = new WebSocketServer({ noServer: server });
+const wss = new WebSocketServer({  server });
 
 wss.on("connection", (connection, req) => {
   const notifyAboutOnlinePeople = () => {

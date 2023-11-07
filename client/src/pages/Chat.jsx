@@ -19,12 +19,16 @@ const Chat = () => {
   const [selectedUsersId, setSelectedUsersId] = useState(null);
   const [newMessageText, setNewMessageText] = useState("");
   const [messages, setMessages] = useState([]);
+
+
+  console.log("messages", messages)
+
   const [offlinePeople, setOfflinePeople] = useState([]);
   const divUnderMessages = useRef();
   const { userData } = useContext(UserContext);
 
   const connectToWs = () => {
-    const ws = new WebSocket("wss://mern-chat-app-1-server.vercel.app");
+    const ws = new WebSocket("ws://localhost:4000");
     setWs(ws);
     ws.addEventListener("message", handleMessage);
     ws.addEventListener("close", (event) => {
@@ -115,15 +119,16 @@ const Chat = () => {
       })
     );
     setNewMessageText("");
-    setMessages((prev) => [
-      ...prev,
-      {
-        text: newMessageText,
-        sender: userData.user._id,
-        recipient: selectedUsersId,
-        _id: Date.now(),
-      },
-    ]);
+   setMessages((prev) => [
+     ...prev,
+     {
+       text: newMessageText,
+       sender: userData.user._id,
+       recipient: selectedUsersId,
+       _id: Date.now(),
+     },
+   ]);
+
     if (file) {
       axios
         .get(`${VITE_BASE_MESSAGE_URL}/get-all/${selectedUsersId}`, {
@@ -258,8 +263,12 @@ const Chat = () => {
                           </div>
                         )}
                         <div className="text-xs text-black mt-1">
-                          Sent at:
-                          {new Date(message.createdAt).toDateString()}
+                          {message.createdAt instanceof Date && (
+                            <>
+                              Sent at:{" "}
+                              {new Date(message.createdAt).toLocaleDateString()}
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>

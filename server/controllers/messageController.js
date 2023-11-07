@@ -5,7 +5,16 @@ import User from "../models/userModel.js";
 
 async function getUserDataFromRequest(req) {
   return new Promise((resolve, reject) => {
-    const token = req.cookies?.token;
+    const authorizationHeader = req.headers.authorization;
+    if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authorized, Please Login",
+      });
+    }
+
+    const token = authorizationHeader.split(" ")[1];
+    
     if (token) {
       jwt.verify(token, process.env.JWT_SECRET_KEY, {}, (err, userData) => {
         if (err) throw err;
@@ -23,7 +32,7 @@ export const getMessages = expressAsyncHandler(async (req, res) => {
   const { userId } = req.params;
 
   const ourUserId = userData.user._id;
-  
+
   const messages = await Message.find({
     sender: { $in: [userId, ourUserId] },
     recipient: { $in: [userId, ourUserId] },
